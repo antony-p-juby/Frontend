@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:frontend/dashboard.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'config.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,6 +18,17 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   bool _isNotValidate = false;
+  late SharedPreferences prefs;
+  
+  @override
+  void initState() {
+    super.initState();
+    initSharedPref();
+  }
+
+  void initSharedPref() async{
+    prefs=await SharedPreferences.getInstance();
+  }
 
   void loginUser() async {
     if (emailcontroller.text.isNotEmpty && passwordController.text.isNotEmpty) {
@@ -36,7 +49,9 @@ class _LoginPageState extends State<LoginPage> {
 
       var jsonResponse=jsonDecode(response.body);
       if(jsonResponse['status']){
-
+        var myToken=jsonResponse['token'];
+        prefs.setString('token', myToken);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard(token: myToken),));
       }else{
         print('Error while checking credentials');
       }
