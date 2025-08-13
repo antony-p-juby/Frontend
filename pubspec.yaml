@@ -37,6 +37,10 @@ dependencies:
   http: 
   shared_preferences:
   jwt_decoder: 
+  qr_flutter: 
+  mobile_scanner: 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
