@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import './generate_qr_code.dart';
+import 'config.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ScanQrCode extends StatefulWidget {
   const ScanQrCode({super.key});
@@ -13,6 +16,25 @@ class _ScanQrCodeState extends State<ScanQrCode> {
   String scannedText = 'Scanned data will appear here';
   bool isScanned = false;
 
+  Future<void> sendDataToBackend(String barcodeData) async {
+    final response = await http.post(
+      Uri.parse(data),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'data': barcodeData}),
+    );
+
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Data saved to backend")),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to save data: ${response.body}")),
+      );
+    }
+  }
+
   void handleDetect(BarcodeCapture capture) {
     if (isScanned) return;
 
@@ -23,6 +45,8 @@ class _ScanQrCodeState extends State<ScanQrCode> {
       scannedText = code;
       isScanned = true;
     });
+
+    sendDataToBackend(code); 
 
     ScaffoldMessenger.of(
       context,
@@ -60,6 +84,7 @@ class _ScanQrCodeState extends State<ScanQrCode> {
                     },
                     child: const Text('Scan Again'),
                   ),
+                  const SizedBox(height: 40),
                   ElevatedButton(
                     onPressed: () {
                       if (scannedText.isNotEmpty &&

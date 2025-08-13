@@ -26,14 +26,28 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
+        
         title: Text('QR/Barcode Scanner'),
         backgroundColor: Colors.lightBlueAccent,
+        actions: [
+          Row(
+            children: [
+              const Icon(Icons.person),
+              const SizedBox(width: 5),
+              Text(
+                'Welcome, $email',
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 10), 
+            ],
+          ),
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(email),
+            
             ElevatedButton(onPressed: (){
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context)=>const ScanQrCode()),
