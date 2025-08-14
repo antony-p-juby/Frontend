@@ -90,7 +90,7 @@ Future<void> deleteData(dynamic id) async {
                 0: FixedColumnWidth(50),
                 1: FixedColumnWidth(200),
                 2: FixedColumnWidth(150),
-                3: FixedColumnWidth(60),
+                3: FixedColumnWidth(150),
               },
               border: TableBorder.all(width: 1, color: Colors.black),
               children: [
