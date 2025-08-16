@@ -38,8 +38,10 @@ dependencies:
   shared_preferences:
   jwt_decoder: 
   qr_flutter: 
-  mobile_scanner: 
-
+  mobile_scanner:
+  printing: 
+  pdf: 
+  permission_handler:
 
 dev_dependencies:
   flutter_test:

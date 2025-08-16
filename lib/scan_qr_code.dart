@@ -4,6 +4,7 @@ import './generate_qr_code.dart';
 import 'config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 
 class ScanQrCode extends StatefulWidget {
   const ScanQrCode({super.key});
@@ -35,6 +36,19 @@ class _ScanQrCodeState extends State<ScanQrCode> {
     }
   }
 
+  Future<void> requestCameraPermission() async {
+  var status = await Permission.camera.status;
+  if (!status.isGranted) {
+    await Permission.camera.request();
+  }
+}
+
+  @override
+  void initState() {
+    super.initState();
+    requestCameraPermission();
+  }
+
   void handleDetect(BarcodeCapture capture) {
     if (isScanned) return;
 
@@ -50,7 +64,7 @@ class _ScanQrCodeState extends State<ScanQrCode> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text("Scanned:,$code")));
+    ).showSnackBar(SnackBar(content: Text("Scanned:$code")));
   }
 
   @override
@@ -99,7 +113,7 @@ class _ScanQrCodeState extends State<ScanQrCode> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
-                              'No data to generate to generate QR code',
+                              'No data to generate QR code',
                             ),
                           ),
                         );
