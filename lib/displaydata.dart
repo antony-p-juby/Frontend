@@ -21,7 +21,9 @@ class _DisplaydataState extends State<Displaydata> {
 
   Future<void> fetchData() async {
     try {
-      final response = await http.get(Uri.parse(finddata));
+      final response = await http.get(Uri.parse(finddata),
+      headers: {"ngrok-skip-browser-warning": "true"},
+      );
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         setState(() {
@@ -45,7 +47,9 @@ class _DisplaydataState extends State<Displaydata> {
 Future<void> deleteData(dynamic id) async {
   try {
     final urlWithId = deletedata.replaceFirst(':id', id.toString()); // convert to String
-    final response = await http.delete(Uri.parse(urlWithId));
+    final response = await http.delete(Uri.parse(urlWithId),
+    headers: {"ngrok-skip-browser-warning": "true"},
+    );
 
     if (response.statusCode == 200) {
       setState(() {
