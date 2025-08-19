@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/generateQR.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import './generate_qr_code.dart';
+// import './generate_qr_code.dart';
 import 'config.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

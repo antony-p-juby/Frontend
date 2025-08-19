@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
       if(jsonResponse['status']){
         var myToken=jsonResponse['token'];
         prefs.setString('token', myToken);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard(token: myToken),));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard(token: myToken),));
       }else{
         print('Error while checking credentials');
       }
